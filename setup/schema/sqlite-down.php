@@ -16,4 +16,5 @@ EOS;
 
 $sqls = explode("\n\n", str_replace("\r", '', $sqldata));
 $sqls = array_map('trim', $sqls);
-var_dump($sqls);
+
+return $sqls;

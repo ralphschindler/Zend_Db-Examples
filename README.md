@@ -39,7 +39,7 @@ Examples:
     * type casting (plugin)
     * logging
     * caching
-    * blobs
+    * blob support
     * profiling
     * limit/pagination
     * case folding?

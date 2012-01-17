@@ -5,14 +5,18 @@ namespace zf2bootstrap;
 // require_once 'includes/Zend_Db-2.0.0beta2.phar';
 
 require_once '/path/to/ZF2/library/Zend/Loader/StandardAutoloader.php';
+require_once './includes/functions.php';
 $autoloader = new \Zend\Loader\StandardAutoloader;
 spl_autoload_register(array($autoloader, 'autoload'));
 
 $dbconfig = array(
-
-    'sqlite' => array(
-        'database' => __DIR__ . '/tmp/sqlite.db'
+    'driver' => array(
+        'type' => 'Pdo',
+        'connectionParams' => array(
+            'dsn' => 'sqlite:' . __DIR__ . '/tmp/sqlite.db'
+        )
     ),
+    'platform' => 'Sqlite'
     
     // 'mysql' => array( // other options: hostname, port, table_type
     //         'username' => '',
@@ -40,18 +44,4 @@ $dbconfig = array(
     
 );
 
-$adapter = new \Zend\Db\Adpater($dbConfig['sqlite']);
-
-function assert_example_works($expression, $continue_if_true) {
-    if ($expression) {
-        if ($continue_if_true) {
-            return;
-        } else {
-            echo 'It works!';
-            exit(0);
-        }
-    } else {
-        echo 'It DOES NOT work!';
-        exit(0);
-    }
-}
+$adapter = new \Zend\Db\Adapter($dbconfig);

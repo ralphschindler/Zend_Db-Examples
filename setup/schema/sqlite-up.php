@@ -15,10 +15,6 @@ CREATE TABLE IF NOT EXISTS "artist" (
   "history" text
 );
 
-INSERT INTO "artist" ("id", "name", "history") VALUES
-(1, 'Foo Artist', NULL),
-(2, 'Bar Artist', NULL);
-
 CREATE TABLE IF NOT EXISTS "artist_genre" (
   "artist_id" int(11) NOT NULL,
   "genre_id" int(11) NOT NULL,
@@ -26,20 +22,12 @@ CREATE TABLE IF NOT EXISTS "artist_genre" (
   PRIMARY KEY ("artist_id","genre_id")
 );
 
-INSERT INTO "artist_genre" ("artist_id", "genre_id", "added_on") VALUES
-(1, 1, '2010-11-10'),
-(1, 2, '2010-11-11');
-
 CREATE TABLE IF NOT EXISTS "genre" (
   "id" INTEGER PRIMARY KEY,
   "parent_id" int(11) DEFAULT NULL,
   "name" varchar(255) NOT NULL,
-  UNIQUE KEY "name" ("name")
+  UNIQUE ("name")
 );
-
-INSERT INTO "genre" ("id", "parent_id", "name") VALUES
-(1, NULL, 'Rock & Roll'),
-(2, NULL, 'Hiphop');
 
 CREATE TABLE IF NOT EXISTS "track" (
   "id" INTEGER PRIMARY KEY,
