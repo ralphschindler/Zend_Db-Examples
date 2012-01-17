@@ -40,7 +40,7 @@ $dbconfig = array(
     
 );
 
-$adapter = new \Zend\Db\Adpater($dbConfig['mysql']);
+$adapter = new \Zend\Db\Adpater($dbConfig['sqlite']);
 
 function assert_example_works($expression, $continue_if_true) {
     if ($expression) {
