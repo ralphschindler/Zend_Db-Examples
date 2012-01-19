@@ -2,41 +2,14 @@
 
 $sqldata = <<<EOS
 
-CREATE TABLE IF NOT EXISTS "album" (
-  "id" INTEGER PRIMARY KEY,
-  "artist_id" int(11) NOT NULL,
-  "title" varchar(255) NOT NULL,
-  "release_date" date NOT NULL
-);
 
-CREATE TABLE IF NOT EXISTS "artist" (
-  "id" INTEGER PRIMARY KEY,
-  "name" varchar(255) NOT NULL,
-  "history" text
-);
 
-CREATE TABLE IF NOT EXISTS "artist_genre" (
-  "artist_id" int(11) NOT NULL,
-  "genre_id" int(11) NOT NULL,
-  "added_on" date NOT NULL,
-  PRIMARY KEY ("artist_id","genre_id")
-);
 
-CREATE TABLE IF NOT EXISTS "genre" (
-  "id" INTEGER PRIMARY KEY,
-  "parent_id" int(11) DEFAULT NULL,
-  "name" varchar(255) NOT NULL,
-  UNIQUE ("name")
-);
 
-CREATE TABLE IF NOT EXISTS "track" (
-  "id" INTEGER PRIMARY KEY,
-  "artist_id" int(11) DEFAULT NULL,
-  "album_id" int(11) DEFAULT NULL,
-  "number" int(11) DEFAULT NULL,
-  "title" varchar(255) NOT NULL,
-  "length" int(11) NOT NULL
-);
+
+
+
+
 
 EOS;
 
