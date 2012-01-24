@@ -62,11 +62,16 @@ $data = array_merge($common, array(
         'DROP TABLE IF EXISTS `artist`;'
     ),
     'data_down' => array(
-        'DELETE FROM "album"',
-        'DELETE FROM "artist"',
-        'DELETE FROM "artist_genre"',
-        'DELETE FROM "genre"',
-        'DELETE FROM "track"',
+        'DELETE FROM `artist_genre`',
+        'DELETE FROM `album`',
+        'DELETE FROM `artist`',
+        'DELETE FROM `genre`',
+        'DELETE FROM `track`',
+        'ALTER TABLE `artist_genre` AUTO_INCREMENT = 1',
+        'ALTER TABLE `album` AUTO_INCREMENT = 1',
+        'ALTER TABLE `artist` AUTO_INCREMENT = 1',
+        'ALTER TABLE `genre` AUTO_INCREMENT = 1',
+        'ALTER TABLE `track` AUTO_INCREMENT = 1',
     ),
 ));
 

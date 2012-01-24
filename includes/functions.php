@@ -23,9 +23,14 @@ function refresh_data($adapter) {
     $vendorData = include __DIR__ . '/../setup/vendor/' . strtolower($platform) . '.php';
 
     try {
-        foreach ($vendorData['data_up'] as $tableName => $tableData) {
+        foreach ($vendorData['data_down'] as $downSql) {
+            $adapter->query(
+                $downSql,
+                $adapter::QUERY_MODE_EXECUTE
+            );
+        }
 
-            $adapter->query('DELETE FROM ' . $tableName, $adapter::QUERY_MODE_EXECUTE);
+        foreach ($vendorData['data_up'] as $tableName => $tableData) {
 
             foreach ($tableData as $rowName => $rowData) {
 

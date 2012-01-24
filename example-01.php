@@ -1,15 +1,29 @@
 <?php
 
 /**
- * Issue SELECT command through adapter using array paramaterization (default)
+ * Issue SELECT command through adapter, using the driver and platform
+ * to create completely portable SQL by hand.
+ *
+ * Currently tested against:
+ *  Mysqli via MySQL
+ *  Sqlite via PDO
  */
 
+/* @var $adapter Zend\Db\Adapter */
 $adapter = include ((file_exists('bootstrap.php')) ? 'bootstrap.php' : 'bootstrap.dist.php');
 refresh_data($adapter);
 
-/* @var $adapter Zend\Db\Adapter */
-$statement = $adapter->query('SELECT * FROM artist WHERE id = ?');
-$results = $statement->execute(array(2));
+// create completely portable SQL by hand
+$sql = 'SELECT * FROM '
+    . $adapter->platform->quoteIdentifier('artist')
+    . ' WHERE id = ' . $adapter->driver->formatParameterName('id');
+
+/* @var $statement Zend\Db\Adapter\DriverStatement */
+$statement = $adapter->query($sql);
+$parameters = array('id' => 2);
+
+/* @var $results Zend\Db\ResultSet\ResultSet */
+$results = $statement->execute($parameters);
 
 $row = $results->current();
 $name = $row['name'];
