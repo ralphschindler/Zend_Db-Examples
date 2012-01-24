@@ -7,41 +7,20 @@ namespace zf2bootstrap;
 require_once '/path/to/ZF2/library/Zend/Loader/StandardAutoloader.php';
 require_once './includes/functions.php';
 $autoloader = new \Zend\Loader\StandardAutoloader;
-spl_autoload_register(array($autoloader, 'autoload'));
+$autoloader->register();
 
 $dbconfig = array(
-    'driver' => array(
-        'type' => 'Pdo',
-        'connectionParams' => array(
-            'dsn' => 'sqlite:' . __DIR__ . '/tmp/sqlite.db'
-        )
-    ),
-    'platform' => 'Sqlite'
-    
-    // 'mysql' => array( // other options: hostname, port, table_type
-    //         'username' => '',
-    //         'password' => '',
-    //         'database' => ''
-    //     ),
-    
-    // 'mssql' => array(
-    //         'username' => '',
-    //         'password' => '',
-    //         'database' => ''
-    //     ),
-    
-    // 'oracle' => array(
-    //         'username' => '',
-    //         'password' => '',
-    //         'database' => ''
-    //     ),
-    
-    // 'ibmdb2' => array(
-    //         'username' => '',
-    //         'password' => '',
-    //         'database' => ''
-    //     ),
-    
+
+    // Sqlite Configuration
+    'type' => 'Pdo',
+    'dsn' => 'sqlite:' . __DIR__ . '/tmp/sqlite.db',
+
+    // Mysql Configuration
+    // 'type'     => 'Mysqli',
+    // 'username' => '',
+    // 'password' => '',
+    // 'database' => ''
+
 );
 
 $adapter = new \Zend\Db\Adapter($dbconfig);

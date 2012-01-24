@@ -6,11 +6,11 @@ function assert_example_works($expression, $continue_if_true = false) {
         if ($continue_if_true) {
             return;
         } else {
-            echo 'It works!';
+            echo 'It works!' . PHP_EOL;
             exit(0);
         }
     } else {
-        echo 'It DOES NOT work!';
+        echo 'It DOES NOT work!' . PHP_EOL;
         exit(0);
     }
 }
@@ -19,11 +19,11 @@ function assert_example_works($expression, $continue_if_true = false) {
  * @param Zend\Db\Adapter $adapter
  */
 function refresh_data($adapter) {
-
-    $datas = include __DIR__ . '/../setup/data/data.php';
+    $platform = $adapter->getPlatform()->getName();
+    $vendorData = include __DIR__ . '/../setup/vendor/' . strtolower($platform) . '.php';
 
     try {
-        foreach ($datas as $tableName => $tableData) {
+        foreach ($vendorData['data_up'] as $tableName => $tableData) {
 
             $adapter->query('DELETE FROM ' . $tableName, $adapter::QUERY_MODE_EXECUTE);
 
