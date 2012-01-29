@@ -32,6 +32,18 @@ function refresh_data($adapter) {
 
         foreach ($vendorData['data_up'] as $tableName => $tableData) {
 
+            if ($tableData == null) {
+                continue;
+            }
+
+            if (is_int($tableName) && is_string($tableData)) {
+                $adapter->query(
+                    $tableData,
+                    $adapter::QUERY_MODE_EXECUTE
+                );
+                continue;
+            }
+
             foreach ($tableData as $rowName => $rowData) {
 
                 $keys = array_keys($rowData);
@@ -59,6 +71,7 @@ function refresh_data($adapter) {
         }
     } catch (\Exception $e) {
         echo $e->getMessage();
+        var_dump($e);
         exit(1);
     }
 

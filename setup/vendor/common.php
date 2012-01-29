@@ -2,6 +2,7 @@
 
 return array(
     'data_up' => array(
+        'album' => array(),
         'artist' => array(
             array(
                 'id' => 1,
@@ -37,6 +38,7 @@ return array(
                 'genre_id'  => 2,
                 'added_on'  => '2010-11-11'
             )
-        )
+        ),
+        'track' => array(),
     )
 );
