@@ -8,11 +8,17 @@ $adapter = include ((file_exists('bootstrap.php')) ? 'bootstrap.php' : 'bootstra
 refresh_data($adapter);
 
 /* @var $adapter Zend\Db\Adapter */
-$statement = $adapter->query('SELECT * FROM artist WHERE id = ?');
-$results = $statement->execute(
-    new Zend\Db\Adapter\DriverStatement\PositionalParameterContainer(1, array(2))
-);
+$artistTable = new Zend\Db\TableGateway\TableGateway('artist', $adapter);
+$result = $artistTable->insert(array(
+    'name' => 'New Artist',
+    'history' => 'This is the history'
+));
 
-$row = $results->current();
+assert_example_works($result === 1, true);
+
+$artistTable = new Zend\Db\TableGateway\TableGateway('artist', $adapter);
+$rowset = $artistTable->select(array('id' => 3));
+$row = $rowset->current();
+
 $name = $row['name'];
-assert_example_works($name == 'Bar Artist');
+assert_example_works($name == 'New Artist');
