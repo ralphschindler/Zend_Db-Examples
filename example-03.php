@@ -14,7 +14,7 @@ $sql = 'UPDATE ' . $qi('artist')
     . ' SET ' . $qi('name') . ' = ' . $fp('name')
     . ' WHERE ' . $qi('id') . ' = ' . $fp('id');
 
-/* @var $statement Zend\Db\Adapter\DriverStatement */
+/* @var $statement Zend\Db\Adapter\DriverStatementInterface */
 $statement = $adapter->query($sql);
 
 $parameters = array(
@@ -26,7 +26,7 @@ $statement->execute($parameters);
 
 // DATA INSERTED, NOW CHECK
 
-/* @var $statement Zend\Db\Adapter\DriverStatement */
+/* @var $statement Zend\Db\Adapter\DriverStatementInterface */
 $statement = $adapter->query('SELECT * FROM '
     . $qi('artist')
     . ' WHERE id = ' . $fp('id'));

@@ -18,7 +18,7 @@ $sql = 'SELECT * FROM '
     . $adapter->platform->quoteIdentifier('artist')
     . ' WHERE id = ' . $adapter->driver->formatParameterName('id');
 
-/* @var $statement Zend\Db\Adapter\DriverStatement */
+/* @var $statement Zend\Db\Adapter\DriverStatementInterface */
 $statement = $adapter->query($sql);
 $parameters = array('id' => 2);
 

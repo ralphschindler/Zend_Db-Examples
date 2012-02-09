@@ -2,11 +2,14 @@
 
 namespace zf2bootstrap;
 
+use Zend\Loader\StandardAutoloader as Autoloader,
+    Zend\Db\Adapter\Adapter as DbAdapter;
+
 // require_once 'includes/Zend_Db-2.0.0beta2.phar';
 
 require_once '/path/to/ZF2/library/Zend/Loader/StandardAutoloader.php';
 require_once './includes/functions.php';
-$autoloader = new \Zend\Loader\StandardAutoloader;
+$autoloader = new Autoloader;
 $autoloader->register();
 
 $dbconfig = array(
@@ -23,4 +26,4 @@ $dbconfig = array(
 
 );
 
-$adapter = new \Zend\Db\Adapter($dbconfig);
+$adapter = new DbAdapter($dbconfig);
