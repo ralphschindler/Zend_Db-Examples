@@ -5,12 +5,13 @@ namespace zf2bootstrap;
 use Zend\Loader\StandardAutoloader as Autoloader,
     Zend\Db\Adapter\Adapter as DbAdapter;
 
-// require_once 'includes/Zend_Db-2.0.0beta2.phar';
-
-require_once '/path/to/ZF2/library/Zend/Loader/StandardAutoloader.php';
 require_once './includes/functions.php';
-$autoloader = new Autoloader;
-$autoloader->register();
+
+include 'Zend_Db-2.0.0dev.phar';
+
+//require_once '/path/to/ZF2/library/Zend/Loader/StandardAutoloader.php';
+//$autoloader = new Autoloader;
+//$autoloader->register();
 
 $dbconfig = array(
 
@@ -18,12 +19,21 @@ $dbconfig = array(
     'type' => 'Pdo',
     'dsn' => 'sqlite:' . __DIR__ . '/tmp/sqlite.db',
 
-    // Mysql Configuration
-    // 'type'     => 'Mysqli',
-    // 'username' => '',
-    // 'password' => '',
-    // 'database' => ''
+    // Mysqli Configuration
+    //'type'     => 'Mysqli',
+    //'hostname' => 'localhost',
+    //'username' => 'developer',
+    //'password' => 'developer',
+    //'database' => 'zend_db_example',
+    //'table_type' => 'InnoDB'
+
+    // Sqlsrv Configuration
+    //'type' => 'Sqlsrv',
+    //'hostname' => 'MYHOSTNAME-PC\SQLEXPRESS',
+    //'UID' => 'developer',
+    //'PWD' => 'developer',
+    //'Database' => 'zend_db_example'
 
 );
 
-$adapter = new DbAdapter($dbconfig);
+return new DbAdapter($dbconfig);
