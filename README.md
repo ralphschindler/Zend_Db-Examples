@@ -1,46 +1,64 @@
 README
 ======
 
-Setup scripts:
+Introduction
+------------
 
-* setup/up.php & setup/down.php
+This repository show's off Zend\Db's feature-set via a simple schema and simple tasks.  The schema's are located in `setup/vendor` and are tailored to setup a scheme in a vendor specific way.  So, the first thing you'll need to do is run the setup scripts.  If you decide you want to run them against something other than Sqlite, first copy the bootstrap and setup the proper credentials.
+
+Setup:
+------
+
+First, you'll need to 
+
+    setup/up.php
+
+If you want to run against something other than Sqlite, copy the bootstrap, then fill out the credentials in the appropriate section:
+
+    cp bootstrap.dist.php bootstrap.php
+    < < edit bootstrap.php > >
+    
+To destroy a schema
+
+    setup/down.php
+
 
 Examples:
+---------
 
-1. SELECT through adapter using array based parameritized query
-* INSERT through adapter using array based parameritized query
-* UPDATE through adapter using array based parameritized query
-* DELETE through adapter using array based parameritized query
-* Demonstrate adapter exception handling
-* SELECT through adapter using executed and quoted values
-* SELECT through adapter using name based container paramaterization
-* SELECT through adapter using positional based container paramaterization
-* SELECT through adapter using paramaterization, iterating result as array values
-* SELECT through adapter using paramaterization, iterating result as objects
-* Retrieve metadata from the database in array/object format about tables, views, columns, constraints, triggers
-* Display metadata from the database on CLI format about tables, views, columns, constraints, triggers
-* Construct SELECT query via SQL builder as preparable and executable query, with values
-* Construct INSERT query via SQL builder as preparable and executable query, with values
-* Construct UPDATE query via SQL builder as preparable and executable query, with values
-* Construct DELETE query via SQL builder as preparable and executable query, with values
-* Construct SELECT query via SQL builder with predicates (IN, BETWEEN, ISNULL, LIKE, NOT, etc)
-* Construct DDL CREATE TABLE via SQL builder
-* Construct DDL ALTER TABLE via SQL builder
-* Construct DDL DROP TABLE via SQL builder
-* select() via TableGateway, retrieving data as array
-* select() via TableGateway, retrieving data as object
-* insert() via TableGateway
-* update() via TableGateway
-* delete() via TableGateway
-* SELECT through adapter, retrieving rows as RowGatway objects, demonstrating interaction with columns
-* SELECT through adapter, retrieving rows as RowGatway object, demonstrating save(), delete()
-* select() via TableGateway, returning a RowGateway object
-* more:
-    * type casting (plugin)
-    * logging
-    * caching
-    * blob support
-    * profiling
-    * limit/pagination
-    * case folding?
-    * charsets?
+1 - 4. (working) SELECT, INSERT, UPDATE, DELETE through adapter using array based parameritized query.  These scripts are utilizing the Adapter and Platform API's to produce vendor agnostic queries.
+
+    php example-01.php
+    php example-02.php
+    php example-03.php
+    php example-04.php
+    
+5\. Demonstrate adapter exception handling (not working.)
+
+    n/a
+
+6 - 9. TableGateway examples showing basic select(), insert(), update(), and delete().
+
+    php example-06.php
+    php example-07.php
+    php example-08.php
+    php example-09.php
+
+Unpacking the Phar:
+-------------------
+
+Currently, this master repository is using an up to date phar of just Zend_Db.  To extract these files for usage, use the phar.phar utility:
+
+    phar.phar extract -f Zend_Db-2.0.0dev.phar
+    
+Linking to your checked out code:
+
+    cp bootstrap.dist.php bootstrap.php
+
+edit bootstrap with:
+
+    // include 'Zend_Db-2.0.0dev.phar';
+    require_once '/path/to/ZF2/library/Zend/Loader/StandardAutoloader.php';
+    $autoloader = new Autoloader;
+    $autoloader->register();
+    
