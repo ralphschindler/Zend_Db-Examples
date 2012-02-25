@@ -20,7 +20,7 @@ $dbconfig = array(
     'dsn' => 'sqlite:' . __DIR__ . '/tmp/sqlite.db',
 
     // Mysqli Configuration
-    //'type'     => 'Mysqli',
+    //'driver'     => 'Mysqli',
     //'hostname' => 'localhost',
     //'username' => 'developer',
     //'password' => 'developer',
@@ -28,7 +28,7 @@ $dbconfig = array(
     //'table_type' => 'InnoDB'
 
     // Sqlsrv Configuration
-    //'type' => 'Sqlsrv',
+    //'driver' => 'Sqlsrv',
     //'hostname' => 'MYHOSTNAME-PC\SQLEXPRESS',
     //'UID' => 'developer',
     //'PWD' => 'developer',
