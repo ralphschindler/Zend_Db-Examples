@@ -16,7 +16,7 @@ include 'Zend_Db-2.0.0dev.phar';
 $dbconfig = array(
 
     // Sqlite Configuration
-    'type' => 'Pdo',
+    'driver' => 'Pdo',
     'dsn' => 'sqlite:' . __DIR__ . '/tmp/sqlite.db',
 
     // Mysqli Configuration
