@@ -12,4 +12,5 @@ $rowset = $artistTable->select(array('id' => 2));
 $row = $rowset->current();
 
 $name = $row['name'];
-assert_example_works($name == 'Bar Artist');
+$name2 = $row->name;
+assert_example_works($name == 'Bar Artist' && $name2 == 'Bar Artist');
