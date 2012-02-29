@@ -10,9 +10,12 @@ refresh_data($adapter);
 
 $where = new Zend\Db\Sql\Where();
 $where->equalTo('id', 1)->OR->equalTo('id', 2);
-$where->nest('OR')->like('name', 'Ralph%')->OR->greaterThanOrEqualTo('age', 30)->AND->lessThanOrEqualTo('age', 50);
-$where->literal('foo = ?', 'bar');
+$where->OR
+    ->NEST->like('name', 'Ralph%')->OR->greaterThanOrEqualTo('age', 30)->AND->lessThanOrEqualTo('age', 50)->UNNEST
+    ->literal('foo = ?', 'bar');
 
-$target = ' WHERE "id" = \'1\' OR "id" = \'2\' OR ("name" LIKE \'Ralph%\' OR "age" >= \'30\' AND "age" <= \'50\') AND foo = \'bar\'';
+$target =<<<EOS
+ WHERE "id" = '1' OR "id" = '2' OR ("name" LIKE 'Ralph%' OR "age" >= '30' AND "age" <= '50') AND foo = 'bar'
+EOS;
 
 assert_example_works($target == $where->getSqlString());
