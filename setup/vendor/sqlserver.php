@@ -38,7 +38,7 @@ $data = array_merge($common, array(
           [length] INTEGER NOT NULL
         );',
         'ALTER TABLE [album]
-          ADD CONSTRAINT [fk_album_artist] FOREIGN KEY ([artist_id]) REFERENCES [artist] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION',
+          ADD CONSTRAINT [fk_album_artist] FOREIGN KEY ([artist_id]) REFERENCES [artist] ([id]) ON DELETE CASCADE ON UPDATE CASCADE',
         'ALTER TABLE [artist_genre]
           ADD CONSTRAINT [fk_artist_genre_artist] FOREIGN KEY ([artist_id]) REFERENCES [artist] ([id]) ON DELETE CASCADE ON UPDATE CASCADE',
         'ALTER TABLE [artist_genre]
@@ -89,12 +89,12 @@ $data = array_merge($common, array(
 ));
 
 $data['data_up'] = array(
-    'SET IDENTITY_INSERT [album] ON',
-    'album' => $data['data_up']['album'],
-    'SET IDENTITY_INSERT [album] OFF',
     'SET IDENTITY_INSERT [artist] ON',
     'artist' => $data['data_up']['artist'],
     'SET IDENTITY_INSERT [artist] OFF',
+    'SET IDENTITY_INSERT [album] ON',
+    'album' => $data['data_up']['album'],
+    'SET IDENTITY_INSERT [album] OFF',
     'SET IDENTITY_INSERT [genre] ON',
     'genre' => $data['data_up']['genre'],
     'SET IDENTITY_INSERT [genre] OFF',

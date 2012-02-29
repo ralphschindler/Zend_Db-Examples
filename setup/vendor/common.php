@@ -2,7 +2,6 @@
 
 return array(
     'data_up' => array(
-        'album' => array(),
         'artist' => array(
             array(
                 'id' => 1,
@@ -14,6 +13,20 @@ return array(
                 'name' => 'Bar Artist',
                 'history' => null,
             )
+        ),
+        'album' => array(
+            array(
+                'id' => 1,
+                'artist_id' => 1,
+                'title' => 'Foos First Album',
+                'release_date' => '2000-01-01'
+            ),
+            array(
+                'id' => 2,
+                'artist_id' => 1,
+                'title' => 'Foos Second Album',
+                'release_date' => '2005-09-15'
+            ),
         ),
         'genre' => array(
             array(
