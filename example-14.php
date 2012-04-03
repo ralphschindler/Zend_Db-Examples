@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Issue SELECT command through adapter using name based container paramaterization
- */
-
 $adapter = include ((file_exists('bootstrap.php')) ? 'bootstrap.php' : 'bootstrap.dist.php');
 refresh_data($adapter);
 
