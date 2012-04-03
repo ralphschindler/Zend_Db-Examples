@@ -8,13 +8,13 @@ $adapter = include ((file_exists('bootstrap.php')) ? 'bootstrap.php' : 'bootstra
 refresh_data($adapter);
 
 $artistTable = new Zend\Db\TableGateway\TableGateway('artist', $adapter);
-$artistTable->setSelectResultPrototype(
-    new Zend\Db\ResultSet\ResultSet(new Zend\Db\RowGateway\RowGateway($artistTable, 'id'))
-);
 
 // find and update
 $rowset = $artistTable->select(array('id' => 2));
+$rowset->setRowObjectPrototype(new Zend\Db\RowGateway\RowGateway($artistTable, 'id'));
+
 $row = $rowset->current();
+
 $row['name'] = 'New Artist'; // array notation
 $affected = $row->save();
 
