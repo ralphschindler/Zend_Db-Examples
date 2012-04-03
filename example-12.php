@@ -9,8 +9,17 @@ refresh_data($adapter);
 
 $artistTable = new Zend\Db\TableGateway\TableGateway('artist', $adapter);
 
+// All select()
+//
+// $artistTable->setSelectResultPrototype(
+//     new Zend\Db\ResultSet\ResultSet(new Zend\Db\RowGateway\RowGateway($artistTable, 'id'))
+// );
+
+
 // find and update
 $rowset = $artistTable->select(array('id' => 2));
+
+// make sure all rows come back and RowGateway
 $rowset->setRowObjectPrototype(new Zend\Db\RowGateway\RowGateway($artistTable, 'id'));
 
 $row = $rowset->current();
