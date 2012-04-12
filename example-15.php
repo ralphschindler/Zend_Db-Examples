@@ -11,7 +11,7 @@ $select = new Select;
 $select->from('artist')
     ->columns(array()) // no columns from main table
     ->join('album', 'artist.id = album.artist_id', array('title', 'release_date'))
-    ->order('release_date')
+    ->order(array('release_date', 'title'))
     ->where->like('artist.name', '%Brit%');
 
 $statement = $adapter->createStatement();
@@ -22,12 +22,12 @@ $resultSet->setDataSource($statement->execute());
 
 $albums = array();
 foreach ($resultSet as $row) {
-    $albums[] = $row->title . ' released on: ' . $row->release_date;
+    $albums[] = $row->title . ' released on: ' . date('Y-m-d', strtotime($row->release_date));
 }
 
 assert_example_works(
     $albums == array(
-        0 => '...Baby One More Time released on: 1999-2-14',
+        0 => '...Baby One More Time released on: 1999-02-14',
         1 => 'Oops!... I Did It Again released on: 2000-10-10',
         2 => 'Britney released on: 2001-04-06',
         3 => 'Blackout released on: 2007-10-10',
