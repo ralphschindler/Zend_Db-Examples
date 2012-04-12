@@ -9,27 +9,29 @@ use Zend\Db\Sql\Select,
 
 $select = new Select;
 $select->from('artist')
-    ->join('album', 'artist.id = album.artist_id')
-    ->where->like('artist.name', 'Brit%');
+    ->columns(array()) // no columns from main table
+    ->join('album', 'artist.id = album.artist_id', array('title', 'release_date'))
+    ->order('release_date')
+    ->where->like('artist.name', '%Brit%');
 
-$statment = $adapter->createStatement();
-$select->prepareStatement($adapter, $statment);
+$statement = $adapter->createStatement();
+$select->prepareStatement($adapter, $statement);
 
 $resultSet = new ResultSet();
-$resultSet->setDataSource($statment->execute());
+$resultSet->setDataSource($statement->execute());
 
 $albums = array();
 foreach ($resultSet as $row) {
-    $albums[] = $row->title;
+    $albums[] = $row->title . ' released on: ' . $row->release_date;
 }
 
 assert_example_works(
     $albums == array(
-        0 => '...Baby One More Time',
-        1 => 'Oops!... I Did It Again',
-        2 => 'Britney',
-        3 => 'In the Zone',
-        4 => 'Blackout',
-        5 => 'Circus',
-        6 => 'Femme Fatale',
+        0 => '...Baby One More Time released on: 1999-2-14',
+        1 => 'Oops!... I Did It Again released on: 2000-10-10',
+        2 => 'Britney released on: 2001-04-06',
+        3 => 'Blackout released on: 2007-10-10',
+        4 => 'Circus released on: 2008-11-23',
+        5 => 'Femme Fatale released on: 2011-10-10',
+        6 => 'In the Zone released on: 2011-10-10',
 ));
