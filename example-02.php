@@ -4,7 +4,7 @@
  * Issue INSERT command through adapter using array paramaterization (default)
  */
 
-/* @var Zend\Db\Adapter $adapter */
+/* @var Zend\Db\Adapter\Adapter $adapter */
 $adapter = include ((file_exists('bootstrap.php')) ? 'bootstrap.php' : 'bootstrap.dist.php');
 refresh_data($adapter);
 
@@ -16,7 +16,7 @@ $sql = 'INSERT INTO '
     . ' (' . $qi('name') . ', ' . $qi('history') . ') VALUES ('
     . $fp('name') . ', ' . $fp('history') . ')';
 
-/* @var $statement Zend\Db\Adapter\DriverStatementInterface */
+/* @var $statement Zend\Db\Adapter\Driver\StatementInterface */
 $statement = $adapter->query($sql);
 
 $parameters = array(
@@ -24,18 +24,21 @@ $parameters = array(
     'history' => 'This is the history'
 );
 
-$statement->execute($parameters);
+$result = $statement->execute($parameters);
+
+$id = (int) $result->getGeneratedValue();
 
 // DATA INSERTED, NOW CHECK
 
-/* @var $statement Zend\Db\Adapter\DriverStatementInterface */
+/* @var $statement Zend\Db\Adapter\Driver\StatementInterface */
 $statement = $adapter->query('SELECT * FROM '
     . $qi('artist')
     . ' WHERE id = ' . $fp('id'));
 
 /* @var $results Zend\Db\ResultSet\ResultSet */
-$results = $statement->execute(array('id' => 3));
+$results = $statement->execute(array('id' => $id));
 
 $row = $results->current();
 $name = $row['name'];
+
 assert_example_works($name == 'New Artist');

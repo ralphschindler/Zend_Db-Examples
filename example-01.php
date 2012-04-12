@@ -27,4 +27,4 @@ $results = $statement->execute($parameters);
 
 $row = $results->current();
 $name = $row['name'];
-assert_example_works($name == 'Bar Artist');
+assert_example_works($name == 'Linkin Park');
