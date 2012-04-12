@@ -8,10 +8,11 @@ use Zend\Db\TableGateway\TableGateway,
 
 $artistTable = new TableGateway('artist', $adapter);
 $rowset = $artistTable->select(function (Select $select) {
-    $select->where->like('name', 'Bar%');
+    $select->where->like('name', 'Link%');
 });
 $row = $rowset->current();
 
 $name = $row['name'];
 $name2 = $row->name;
-assert_example_works($name == 'Bar Artist' && $name2 == 'Bar Artist');
+
+assert_example_works($name == 'Linkin Park' && $name2 == 'Linkin Park');

@@ -10,7 +10,7 @@ use Zend\Db\Sql\Select,
 $select = new Select;
 $select->from('artist')
     ->join('album', 'artist.id = album.artist_id')
-    ->where->like('artist.name', 'Foo%');
+    ->where->like('artist.name', 'Brit%');
 
 $statment = $adapter->createStatement();
 $select->prepareStatement($adapter, $statment);
@@ -23,4 +23,13 @@ foreach ($resultSet as $row) {
     $albums[] = $row->title;
 }
 
-assert_example_works($albums == array('Foos First Album', 'Foos Second Album'));
+assert_example_works(
+    $albums == array(
+        0 => '...Baby One More Time',
+        1 => 'Oops!... I Did It Again',
+        2 => 'Britney',
+        3 => 'In the Zone',
+        4 => 'Blackout',
+        5 => 'Circus',
+        6 => 'Femme Fatale',
+));

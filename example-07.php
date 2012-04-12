@@ -10,10 +10,12 @@ $result = $artistTable->insert(array(
     'history' => 'This is the history'
 ));
 
+$id = $artistTable->getLastInsertValue();
+
 assert_example_works($result === 1, true);
 
 $artistTable = new Zend\Db\TableGateway\TableGateway('artist', $adapter);
-$rowset = $artistTable->select(array('id' => 3));
+$rowset = $artistTable->select(array('id' => $id));
 $row = $rowset->current();
 
 $name = $row['name'];
