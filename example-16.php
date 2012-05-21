@@ -4,10 +4,11 @@
 $adapter = include ((file_exists('bootstrap.php')) ? 'bootstrap.php' : 'bootstrap.dist.php');
 refresh_data($adapter);
 
-use Zend\Db\Sql\Select,
-Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Sql,
+    Zend\Db\ResultSet\ResultSet;
 
-$select = new Select;
+$sql = new Sql($adapter);
+$select = $sql->select();
 $select->from('artist')
     ->columns(array()) // no columns from main table
     ->join('album', 'artist.id = album.artist_id', array('title', 'release_date'))
@@ -15,12 +16,12 @@ $select->from('artist')
     ->limit(2)->offset(0)
     ->where->like('artist.name', '%Brit%');
 
-$statement = $adapter->createStatement();
-$select->prepareStatement($adapter, $statement);
-
-$resultSet = new ResultSet();
-
+// prepare statement in a platform specific way
+$statement = $sql->prepareStatementForSqlObject($select);
 $container = $statement->getParameterContainer();
+
+// create iterable result set
+$resultSet = new ResultSet();
 
 // as we iterate bind the new offset to the existing statement
 foreach (array(0, 2, 4) as $offset) {
