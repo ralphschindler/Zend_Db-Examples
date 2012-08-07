@@ -16,7 +16,7 @@ $artistTable = new Zend\Db\TableGateway\TableGateway('artist', $adapter);
 $rowset = $artistTable->select(array('id' => 2));
 
 // make sure all rows come back and RowGateway
-$rowset->setRowObjectPrototype(new Zend\Db\RowGateway\RowGateway('id', 'artist', $adapter));
+$rowset->setArrayObjectPrototype(new Zend\Db\RowGateway\RowGateway('id', 'artist', $adapter));
 
 $row = $rowset->current();
 

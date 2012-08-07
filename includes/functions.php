@@ -1,5 +1,10 @@
 <?php
 
+function example_autoloader($class) {
+    if (strpos($class, 'Zend\\') === 0) {
+        include (defined('ZF2_PATH') ? ZF2_PATH : __DIR__ . '/../../') . 'library/' . str_replace('\\', '/', $class) . '.php';
+    }
+}
 
 function assert_example_works($expression, $continue_if_true = false) {
     if ($expression) {

@@ -18,7 +18,7 @@ $statement = $adapter->createStatement();
 $select->prepareStatement($adapter, $statement);
 
 $resultSet = new ResultSet();
-$resultSet->setDataSource($statement->execute());
+$resultSet->initialize($statement->execute());
 
 $albums = array();
 foreach ($resultSet as $row) {

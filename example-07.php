@@ -12,6 +12,10 @@ $result = $artistTable->insert(array(
 
 $id = $artistTable->getLastInsertValue();
 
+if ($id == null && $adapter->getPlatform()->getName() == 'PostgreSQL') {
+    $id = $adapter->getDriver()->getConnection()->getLastGeneratedValue('artist_id_seq');
+}
+
 assert_example_works($result === 1, true);
 
 $artistTable = new Zend\Db\TableGateway\TableGateway('artist', $adapter);
