@@ -12,7 +12,7 @@ $select = $sql->select();
 $select->from('artist')
     ->columns(array()) // no columns from main table
     ->join('album', 'artist.id = album.artist_id', array('title', 'release_date'))
-    //->order(array('release_date', 'title'))
+    ->order(array('release_date', 'title'))
     ->limit(2)->offset(0)
     ->where->like('artist.name', '%Brit%');
 
