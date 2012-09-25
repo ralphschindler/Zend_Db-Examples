@@ -33,7 +33,7 @@ $id = (int) $result->getGeneratedValue();
 /* @var $statement Zend\Db\Adapter\Driver\StatementInterface */
 $statement = $adapter->query('SELECT * FROM '
     . $qi('artist')
-    . ' WHERE id = ' . $fp('id'));
+    . ' WHERE ' . $qi('id') . ' = ' . $fp('id'));
 
 /* @var $results Zend\Db\ResultSet\ResultSet */
 $results = $statement->execute(array('id' => $id));
