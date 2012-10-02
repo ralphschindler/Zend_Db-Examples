@@ -2,7 +2,7 @@
 
 function example_autoloader($class) {
     if (strpos($class, 'Zend\\') === 0) {
-        include (defined('ZF2_PATH') ? rtrim(ZF2_PATH, '\/') . '\\' : __DIR__ . '/../../') . 'library/' . str_replace('\\', '/', $class) . '.php';
+        include (defined('ZF2_PATH') ? rtrim(ZF2_PATH, '\/') . '/' : __DIR__ . '/../../') . 'library/' . str_replace('\\', '/', $class) . '.php';
     }
 }
 
