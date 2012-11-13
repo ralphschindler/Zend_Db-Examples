@@ -42,13 +42,37 @@ $data = array_merge($common, array(
           CONSTRAINT "track_album_fk" FOREIGN KEY ("album_id") REFERENCES "album" ("id")
         )',
         'CREATE SEQUENCE "artist_id_seq" START WITH 1 INCREMENT BY 1 NOMAXVALUE',
-        'CREATE TRIGGER "artist_autoincrement_trig"' . "\n" . 'BEFORE INSERT ON "artist"' . "\n" . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n" . 'BEGIN SELECT "artist_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n" . 'END;',
+        'CREATE TRIGGER "artist_autoincrement_trig"' . "\n"
+            . 'BEFORE INSERT ON "artist"' . "\n"
+            . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n"
+            . 'BEGIN SELECT "artist_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n"
+            . 'END;',
         'CREATE SEQUENCE "album_id_seq" START WITH 1 INCREMENT BY 1 NOMAXVALUE',
-        'CREATE TRIGGER "album_autoincrement_trig"' . "\n" . 'BEFORE INSERT ON "album"' . "\n" . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n" . 'BEGIN SELECT "album_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n" . 'END;',
+        'CREATE TRIGGER "album_autoincrement_trig"' . "\n"
+            . 'BEFORE INSERT ON "album"' . "\n"
+            . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n"
+            . 'BEGIN SELECT "album_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n"
+            . 'END;',
         'CREATE SEQUENCE "genre_id_seq" START WITH 1 INCREMENT BY 1 NOMAXVALUE',
-        'CREATE TRIGGER "genre_autoincrement_trig"' . "\n" . 'BEFORE INSERT ON "genre"' . "\n" . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n" . 'BEGIN SELECT "genre_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n" . 'END;',
+        'CREATE TRIGGER "genre_autoincrement_trig"' . "\n"
+            . 'BEFORE INSERT ON "genre"' . "\n"
+            . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n"
+            . 'BEGIN SELECT "genre_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n"
+            . 'END;',
         'CREATE SEQUENCE "track_id_seq" START WITH 1 INCREMENT BY 1 NOMAXVALUE',
-        'CREATE TRIGGER "track_autoincrement_trig"' . "\n" . 'BEFORE INSERT ON "track"' . "\n" . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n" . 'BEGIN SELECT "track_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n" . 'END;',
+        'CREATE TRIGGER "track_autoincrement_trig"' . "\n"
+            . 'BEFORE INSERT ON "track"' . "\n"
+            . 'FOR EACH ROW WHEN (NEW."id" IS NULL)' . "\n"
+            . 'BEGIN SELECT "track_id_seq".NEXTVAL INTO :NEW."id" FROM DUAL;' . "\n"
+            . 'END;',
+        'CREATE PROCEDURE "reset_sequence"( "p_seq_name" IN VARCHAR2)' . "\n"
+            . 'IS "l_val" NUMBER;' . "\n"
+            . 'BEGIN' . "\n"
+            . 'EXECUTE IMMEDIATE \'SELECT "\' || "p_seq_name" || \'".NEXTVAL FROM DUAL\' INTO "l_val";' . "\n"
+            . 'EXECUTE IMMEDIATE \'ALTER SEQUENCE "\' || "p_seq_name" || \'" INCREMENT BY -\' || "l_val" || \' MINVALUE 0\';' . "\n"
+            . 'EXECUTE IMMEDIATE \'SELECT "\' || "p_seq_name" || \'".NEXTVAL FROM DUAL \' INTO "l_val";' . "\n"
+            . 'EXECUTE IMMEDIATE \'ALTER SEQUENCE "\' || "p_seq_name" || \'" INCREMENT BY 1 MINVALUE 0\';' . "\n"
+            . 'END;',
     ),
     'schema_down' => array(
         'BEGIN EXECUTE IMMEDIATE \'DROP TABLE "track"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;',
@@ -64,6 +88,7 @@ $data = array_merge($common, array(
         'BEGIN EXECUTE IMMEDIATE \'DROP TRIGGER "genre_autoincrement_trig"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -4080 THEN RAISE; END IF; END;',
         'BEGIN EXECUTE IMMEDIATE \'DROP SEQUENCE "track_id_seq"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -2289 THEN RAISE; END IF; END;',
         'BEGIN EXECUTE IMMEDIATE \'DROP TRIGGER "track_autoincrement_trig"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -4080 THEN RAISE; END IF; END;',
+        'BEGIN EXECUTE IMMEDIATE \'DROP PROCEDURE "reset_sequence"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -4043 THEN RAISE; END IF; END;',
     ),
     'data_down' => array(
         'BEGIN EXECUTE IMMEDIATE \'DELETE FROM "track"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;',
@@ -71,6 +96,7 @@ $data = array_merge($common, array(
         'BEGIN EXECUTE IMMEDIATE \'DELETE FROM "genre"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;',
         'BEGIN EXECUTE IMMEDIATE \'DELETE FROM "album"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;',
         'BEGIN EXECUTE IMMEDIATE \'DELETE FROM "artist"\'; EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF; END;',
+        'BEGIN EXECUTE IMMEDIATE \'EXECUTE "reset_sequence" (\\\'artist_id_seq\\\')\'; END;'
     ),
 
 ));

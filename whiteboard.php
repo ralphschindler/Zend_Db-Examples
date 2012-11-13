@@ -5,3 +5,6 @@ $adapter = include ((file_exists('bootstrap.php')) ? 'bootstrap.php' : 'bootstra
 refresh_data($adapter);
 
 // example here
+$c = $adapter->driver->getConnection();
+$r = $c->execute('SELECT * FROM "artist"');
+var_dump($r);

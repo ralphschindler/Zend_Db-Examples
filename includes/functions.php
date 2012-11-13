@@ -26,7 +26,7 @@ function assert_example_works($expression, $continue_if_true = false) {
 function refresh_data($adapter) {
     $platform = $adapter->getPlatform();
     $platformName = $platform->getName();
-    $vendorData = include __DIR__ . '/../setup/vendor/' . strtolower($platformName) . '.php';
+    $vendorData = include __DIR__ . '/../setup/vendor/' . str_replace(' ', '-', strtolower($platformName)) . '.php';
 
     try {
         foreach ($vendorData['data_down'] as $downSql) {

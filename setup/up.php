@@ -4,11 +4,15 @@ $adapter = include ((file_exists(__DIR__ . '/../bootstrap.php')) ? __DIR__ . '/.
 
 $platform = $adapter->getPlatform()->getName();
 
-$vendorData = include __DIR__ . '/vendor/' . strtolower($platform) . '.php';
+$vendorData = include __DIR__ . '/vendor/' . str_replace(' ', '-', strtolower($platform)) . '.php';
 
 try {
     foreach ($vendorData['schema_down'] as $schemaStmt) {
-        $adapter->query($schemaStmt, $adapter::QUERY_MODE_EXECUTE);
+        try {
+            $adapter->query($schemaStmt, $adapter::QUERY_MODE_EXECUTE);
+        } catch (\Exception $e) {
+            echo $schemaStmt . ' FAILED DUE TO ' . $e->getMessage() . PHP_EOL;
+        }
     }
 } catch (\Exception $e) {
     echo $e->getMessage();
@@ -17,7 +21,11 @@ try {
 
 try {
     foreach ($vendorData['schema_up'] as $schemaStmt) {
-        $adapter->query($schemaStmt, $adapter::QUERY_MODE_EXECUTE);
+        try {
+            $adapter->query($schemaStmt, $adapter::QUERY_MODE_EXECUTE);
+        } catch (\Exception $e) {
+            echo $schemaStmt . ' FAILED DUE TO ' . $e->getMessage() . PHP_EOL;
+        }
     }
 } catch (\Exception $e) {
     echo $e->getMessage();
