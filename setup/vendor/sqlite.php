@@ -31,6 +31,14 @@ return array_merge($common, array(
           FOREIGN KEY ("artist_id") REFERENCES "artist" ("id"),
           FOREIGN KEY ("genre_id") REFERENCES "genre" ("id")
         );',
+        'CREATE TABLE IF NOT EXISTS "album_genre" (
+          "album_id" int(11) NOT NULL,
+          "genre_id" int(11) NOT NULL,
+          "added_on" date NOT NULL,
+          PRIMARY KEY ("album_id","genre_id"),
+          FOREIGN KEY ("album_id") REFERENCES "album" ("id"),
+          FOREIGN KEY ("genre_id") REFERENCES "genre" ("id")
+        );',
         'CREATE TABLE IF NOT EXISTS "track" (
           "id" INTEGER PRIMARY KEY,
           "artist_id" int(11) DEFAULT NULL,
@@ -47,12 +55,14 @@ return array_merge($common, array(
         'DROP TABLE IF EXISTS "artist"',
         'DROP TABLE IF EXISTS "genre"',
         'DROP TABLE IF EXISTS "artist_genre"',
+        'DROP TABLE IF EXISTS "album_genre"',
         'DROP TABLE IF EXISTS "track"'
     ),
     'data_down' => array(
         'DELETE FROM "album"',
         'DELETE FROM "artist"',
         'DELETE FROM "artist_genre"',
+        'DELETE FROM "album_genre"',
         'DELETE FROM "genre"',
         'DELETE FROM "track"',
     )
